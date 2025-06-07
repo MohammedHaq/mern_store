@@ -12,6 +12,16 @@ app.use(express.json());
 
 console.log(process.env.MONGO_URI);
 
+app.get("/api/products", async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.status(200).json({ success: true, products });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
 app.post("/api/products", (req, res) => {
     const product = req.body;
 
